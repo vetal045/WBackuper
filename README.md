@@ -15,7 +15,7 @@ Details about projects can be found at the links below.
 
 ### Build
 
-To generate use `cmakegen-*` files in the scripts folder.
+To generate a solution use `cmakegen-*` files in the scripts folder.
 
 The result solution will be at `cmake-build/*` folder.
 
