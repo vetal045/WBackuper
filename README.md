@@ -17,6 +17,8 @@ Details about projects can be found at the links below.
 
 To generate a solution use `cmakegen-*` files in the scripts folder.
 
+Before generation you should add to system (user) variables the `QTDIR` variable with a path to Qt directory (e.g. `C:\Qt\5.8\msvc2015_64`).
+
 The result solution will be at `cmake-build/*` folder.
 
 For now there are 2 scripts:
