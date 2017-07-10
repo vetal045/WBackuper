@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.7)
 project(Backuper)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/thirdparty/cmake")
 
 include(cotire)
 include(qtloader)
