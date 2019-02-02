@@ -88,6 +88,11 @@ void BackupManager::BackupData(const QString& profileName)
 {
 	const auto& profile = GetProfile(profileName);
 
+	const auto& optionBackup = profile.GetOptionProfileBackup();
+	const auto& dateBackup = profile.GetDateProfileBackup();
+	const auto& timeBackup = profile.GetTimeProfileBackup();
+	const auto& dateTimeBackup = profile.GetDateTimeProfileBackup();
+
 	const auto& files = profile.GetBackupedFilesPath();
 	const auto emptyDirPostfix = profile.GetEmptyDirPostfix();
 
@@ -110,7 +115,9 @@ void BackupManager::BackupData(const QString& profileName)
 	{
 		StreamBuffer headerData(QIODevice::WriteOnly);
 
-		headerData << profile.GetProfileName() << profile.GetCompressionLevel()
+		headerData << profile.GetProfileName() << profile.GetOptionProfileBackup()
+			<< profile.GetDateProfileBackup() << profile.GetTimeProfileBackup()
+			<< profile.GetDateTimeProfileBackup()<< profile.GetCompressionLevel() 
 			<< profile.GetBackupFilePath() << chunkSize << chunkCount;
 
 		hashAlg.addData(headerData.GetData());
@@ -277,17 +284,45 @@ void BackupManager::RestoreData(const QString& profileName)
 		mainHashAlg.addData(hash);
 
 		QString profileName;
+		QString optionBackup;
+		QString dateBackup;
+		QString timeBackup;
+		QString dateTimeBackup;
 		QString backupFilePath;
 
 		StreamBuffer headerIn(headerData, QIODevice::ReadOnly);
 
-		headerIn >> profileName >> compressionLevel >> backupFilePath
-			>> chunkSize >> chunkCount;
+		headerIn >> profileName >> optionBackup >> dateBackup >> timeBackup>> dateTimeBackup
+			>> compressionLevel >> backupFilePath >> chunkSize >> chunkCount;
 
 		if (profileName != profile.GetProfileName())
 		{
 			throw std::runtime_error(QString("Expected profile '%1', not '%2'")
 				.arg(profile.GetProfileName()).arg(profileName).toStdString());
+		}
+
+		if (optionBackup != profile.GetOptionProfileBackup())
+		{
+			throw std::runtime_error(QString("Expected option '%1', not '%2'")
+				.arg(profile.GetOptionProfileBackup()).arg(optionBackup).toStdString());
+		}
+
+		if (dateBackup != profile.GetDateProfileBackup())
+		{
+			throw std::runtime_error(QString("Expected date '%1', not '%2'")
+				.arg(profile.GetDateProfileBackup()).arg(dateBackup).toStdString());
+		}
+
+		if (timeBackup != profile.GetTimeProfileBackup())
+		{
+			throw std::runtime_error(QString("Expected time '%1', not '%2'")
+				.arg(profile.GetTimeProfileBackup()).arg(timeBackup).toStdString());
+		}
+
+		if (dateTimeBackup != profile.GetDateTimeProfileBackup())
+		{
+			throw std::runtime_error(QString("Expected date and time '%1', not '%2'")
+				.arg(profile.GetDateTimeProfileBackup()).arg(dateTimeBackup).toStdString());
 		}
 
 		if (compressionLevel != profile.GetCompressionLevel())

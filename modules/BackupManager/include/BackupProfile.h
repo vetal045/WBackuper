@@ -1,5 +1,8 @@
 #pragma once
 
+#include <QString>
+#include <QStringList>
+
 namespace BackupManager
 {
 
@@ -12,10 +15,10 @@ class BackupProfile
 	//
 	// Public interface.
 	//
+
 public:
 	//! Returns empty directory postfix.
 	QString GetEmptyDirPostfix() const;
-
 	//! Returns profile's name.
 	QString GetProfileName() const;
 	//! Returns path to backup file.
@@ -26,6 +29,14 @@ public:
 	quint64 GetChunkSize() const;
 	//! Returns data compression level.
 	qint32 GetCompressionLevel() const;
+	//! Returns option of data backup.
+	const QString& GetOptionProfileBackup() const;
+	//! Returns date of data backup.
+	const QString& GetDateProfileBackup() const;
+	//! Returns time of data backup.
+	const QString& GetTimeProfileBackup() const;
+	//! Returns date and time of the last data backup.
+	const QString& GetDateTimeProfileBackup() const;
 
 	//! Sets profile's name.
 	void SetProfileName(const QString& name);
@@ -41,6 +52,14 @@ public:
 	void SetChunkSize(const quint64 chunkSIze);
 	//! Sets data compression level.
 	void SetCompressionLevel(const qint32 level);
+	//! Sets option of data backup.
+	void SetOptionProfileBackup(const QString& optionBackup);
+	//! Sets date of data backup.
+	void SetDateProfileBackup(const QString& dateBackup);
+	//! Sets time of data backup.
+	void SetTimeProfileBackup(const QString& timeBackup);
+	//! Sets date and time of the last data backup.
+	void SetDateTimeProfileBackup(const QString& dateTimeBackup);
 
 	//! Loads profile from file.
 	void LoadProfile();
@@ -57,6 +76,14 @@ private:
 
 	//! Profile's name.
 	QString profileName_;
+	//! Option of profile backup
+	QString optionBackup_;
+	//! Date of profile backup
+	QString dateBackup_;
+	//! Time of profile backup
+	QString timeBackup_;
+	//! Date and time last profile backup
+	QString dateTimeBackup_;
 	//! Chunk size in MB.
 	quint64 chunkSize_ = 256;
 	//! Path to backup file.
@@ -101,6 +128,26 @@ inline qint32 BackupProfile::GetCompressionLevel() const
 	return compressionLevel_;
 }
 
+inline const QString & BackupProfile::GetOptionProfileBackup() const
+{
+	return optionBackup_;
+}
+
+inline const QString & BackupProfile::GetDateProfileBackup() const
+{
+	return dateBackup_;
+}
+
+inline const QString & BackupProfile::GetTimeProfileBackup() const
+{
+	return timeBackup_;
+}
+
+inline const QString & BackupProfile::GetDateTimeProfileBackup() const
+{
+	return dateTimeBackup_;
+}
+
 inline void BackupProfile::SetProfileName(const QString& name)
 {
 	profileName_ = name;
@@ -129,6 +176,26 @@ inline void BackupProfile::SetChunkSize(const quint64 chunkSize)
 inline void BackupProfile::SetCompressionLevel(const qint32 level)
 {
 	compressionLevel_ = level;
+}
+
+inline void BackupProfile::SetOptionProfileBackup(const QString & optionBackup)
+{
+	optionBackup_ = optionBackup;
+}
+
+inline void BackupProfile::SetDateProfileBackup(const QString & dateBackup)
+{
+	dateBackup_ = dateBackup;
+}
+
+inline void BackupProfile::SetTimeProfileBackup(const QString & timeBackup)
+{
+	timeBackup_ = timeBackup;
+}
+
+inline void BackupProfile::SetDateTimeProfileBackup(const QString & dateTimeBackup)
+{
+	dateTimeBackup_ = dateTimeBackup;
 }
 
 } // namespace BackupManager
